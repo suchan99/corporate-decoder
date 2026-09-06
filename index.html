@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Translate corporate meeting-speak into plain English, likely intent, and a useful next action." />
+  <meta name="theme-color" content="#f7f7f8" />
+  <meta property="og:title" content="Corporate Decoder" />
+  <meta property="og:description" content="Turn meeting-speak into plain English and a practical next action." />
+  <meta property="og:type" content="website" />
+  <title>Corporate Decoder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="badge">Enterprise Survival Utility 😄</div>
+      <h1>Corporate Decoder</h1>
+      <p class="subtitle">
+        Turn meeting-speak into plain English, expose the likely action,
+        and detect scope creep before it detects you.
+      </p>
+    </section>
+
+    <section class="translator-card" aria-label="Corporate phrase translator">
+      <label for="phrase">What did they say?</label>
+      <div class="input-row">
+        <input id="phrase" type="text" maxlength="180"
+          placeholder='Try: "Can we make one small change?"' autocomplete="off" />
+        <button id="translateBtn">Translate</button>
+      </div>
+
+      <div class="examples">
+        <span>Try:</span>
+        <button class="chip">Let's circle back</button>
+        <button class="chip">Just one quick question</button>
+        <button class="chip">Can we make one small change?</button>
+        <button class="chip">Let's take this offline</button>
+      </div>
+
+      <div id="result" class="result hidden" aria-live="polite">
+        <div class="result-header">
+          <span id="riskBadge" class="risk-badge"></span>
+          <button id="copyBtn" class="ghost-btn" title="Copy result">Copy</button>
+        </div>
+
+        <div class="result-grid">
+          <article>
+            <h2>Translation</h2>
+            <p id="translation"></p>
+          </article>
+          <article>
+            <h2>Likely intent</h2>
+            <p id="intent"></p>
+          </article>
+          <article>
+            <h2>Recommended action</h2>
+            <p id="action"></p>
+          </article>
+          <article>
+            <h2>Meeting survival note</h2>
+            <p id="survival"></p>
+          </article>
+        </div>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        No jargon detected yet. This is statistically unusual for a meeting.
+      </div>
+    </section>
+
+    <section class="about">
+      <h2>Why this exists</h2>
+      <p>
+        Workplace language is often polite, compressed, and ambiguous.
+        This tiny tool turns common phrases into clearer intent and a practical next step.
+        It is deliberately lightweight: no login, no tracking, no API key, no meeting recording.
+      </p>
+    </section>
+
+    <section class="how-it-works">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div><strong>1.</strong><span>Enter a phrase from a meeting, email, or chat.</span></div>
+        <div><strong>2.</strong><span>The app matches known corporate patterns.</span></div>
+        <div><strong>3.</strong><span>You get plain English + a useful next action.</span></div>
+      </div>
+    </section>
+
+    <footer>
+      Built for people who have survived at least one “quick sync.”
+      <span>•</span>
+      <a href="./README.md">View project documentation</a>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
