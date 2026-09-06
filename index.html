@@ -25,8 +25,13 @@
     <section class="translator-card" aria-label="Corporate phrase translator">
       <label for="phrase">What did they say?</label>
       <div class="input-row">
-        <input id="phrase" type="text" maxlength="180"
-          placeholder='Try: "Can we make one small change?"' autocomplete="off" />
+        <div class="autocomplete-wrap">
+          <input id="phrase" type="text" maxlength="180"
+            placeholder='Try: "Can we make one small change?"' autocomplete="off"
+            role="combobox" aria-autocomplete="list" aria-expanded="false"
+            aria-controls="suggestions" />
+          <div id="suggestions" class="suggestions hidden" role="listbox" aria-label="Corporate phrase suggestions"></div>
+        </div>
         <button id="translateBtn">Translate</button>
       </div>
 
@@ -74,7 +79,7 @@
       <p>
         Workplace language is often polite, compressed, and ambiguous.
         This tiny tool turns common phrases into clearer intent and a practical next step.
-        It is deliberately lightweight: no login, no tracking, no API key, no meeting recording.
+        It is deliberately lightweight: no login, no tracking, and no meeting recording. Known phrases stay in your browser; unknown phrases can use the optional AI decoder.
       </p>
     </section>
 
@@ -82,7 +87,7 @@
       <h2>How it works</h2>
       <div class="steps">
         <div><strong>1.</strong><span>Enter a phrase from a meeting, email, or chat.</span></div>
-        <div><strong>2.</strong><span>The app matches known corporate patterns.</span></div>
+        <div><strong>2.</strong><span>Known phrases use the local dictionary; new phrases can fall back to AI.</span></div>
         <div><strong>3.</strong><span>You get plain English + a useful next action.</span></div>
       </div>
     </section>
@@ -93,6 +98,7 @@
       <a href="./README.md">View project documentation</a>
     </footer>
   </main>
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

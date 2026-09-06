@@ -92,6 +92,50 @@ input:focus {
   box-shadow: 0 0 0 4px #f3f4f6;
 }
 
+.autocomplete-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.suggestions {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 7px);
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(17,24,39,.14);
+  padding: 6px;
+}
+
+.suggestion-item {
+  width: 100%;
+  min-height: 42px;
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: #1f2937;
+  text-align: left;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background: var(--soft);
+  transform: none;
+}
+
+.suggestion-item mark {
+  background: transparent;
+  color: inherit;
+  font-weight: 900;
+}
+
 button {
   border: 0;
   border-radius: 14px;

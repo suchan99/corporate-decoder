@@ -158,7 +158,848 @@ const phrases = [
     action: "Confirm scope, decision rights, dependencies, and deadline before accepting.",
     risk: "🟡 Ownership Transfer",
     survival: "Ownership sometimes arrives before documentation."
+  },
+  {
+    patterns: ["the scope may be expanding", "scope may be expanding", "scope is expanding", "scope has expanded"],
+    translation: "The work may be moving beyond what was originally agreed.",
+    intent: "Flag potential scope creep before it quietly becomes the new baseline.",
+    action: "List what changed, who requested it, and the effect on timeline, cost, resources, and approvals.",
+    risk: "🔴 Scope Creep Detected",
+    survival: "Scope has a remarkable ability to expand when nobody is measuring it."
+  },
+  {
+    patterns: ["touch base", "let's touch base", "lets touch base"],
+    translation: "Let's have a short follow-up conversation.",
+    intent: "Reconnect, exchange status, or decide next steps.",
+    action: "Ask what specifically needs to be covered and whether a message would be enough.",
+    risk: "🟢 Follow-up",
+    survival: "Sometimes a touch base is a meeting. Sometimes it is three lines in Teams."
+  },
+  {
+    patterns: ["sync up", "let's sync", "lets sync", "sync on this"],
+    translation: "We need to compare our understanding before moving forward.",
+    intent: "Resolve mismatched information or coordinate next steps.",
+    action: "Bring the current status, decisions needed, and any blockers.",
+    risk: "🟡 Coordination Needed",
+    survival: "Synchronization works better when everyone brings the same version number."
+  },
+  {
+    patterns: ["looping you in", "looping in", "adding you for visibility", "adding you for awareness"],
+    translation: "You are being added to the conversation, possibly with work attached.",
+    intent: "Increase awareness, get input, or transfer context.",
+    action: "Check whether you are FYI, consulted, approver, or owner.",
+    risk: "🟡 Role Ambiguity",
+    survival: "Being copied and being accountable are very different hobbies."
+  },
+  {
+    patterns: ["for visibility", "for awareness", "fyi", "for your information"],
+    translation: "You are being informed, not necessarily asked to act.",
+    intent: "Create awareness or preserve a record.",
+    action: "Look for an explicit ask before treating it as an action item.",
+    risk: "🟢 Informational",
+    survival: "Not every FYI needs a reply-all."
+  },
+  {
+    patterns: ["per my last email", "as per my last email", "as mentioned below", "as mentioned earlier"],
+    translation: "The requested information was already provided.",
+    intent: "Redirect attention to an earlier message without repeating everything.",
+    action: "Review the prior note and respond to the unresolved point directly.",
+    risk: "🟡 Friction Signal",
+    survival: "Corporate archaeology has begun."
+  },
+  {
+    patterns: ["gentle reminder", "friendly reminder", "just a reminder"],
+    translation: "This is overdue or at risk of becoming overdue.",
+    intent: "Prompt action without escalating the tone yet.",
+    action: "Acknowledge, give the status, and provide a realistic completion time.",
+    risk: "🟡 Deadline Pressure",
+    survival: "The reminder is gentle. The next one may develop teeth."
+  },
+  {
+    patterns: ["following up", "just following up", "checking in on this", "any update"],
+    translation: "Someone is waiting for movement or an answer.",
+    intent: "Get status, unblock a dependency, or prompt closure.",
+    action: "Reply with done / in progress / blocked, plus the next date.",
+    risk: "🟡 Follow-up Risk",
+    survival: "Silence tends to generate more follow-ups, not fewer."
+  },
+  {
+    patterns: ["can you take a look", "please take a look", "have a look at this"],
+    translation: "Your review is being requested, but the depth may be undefined.",
+    intent: "Get validation, troubleshooting, or an opinion.",
+    action: "Ask what kind of review is needed: quick sanity check, approval, technical review, or full analysis.",
+    risk: "🟡 Review Scope",
+    survival: "A 'quick look' can range from 30 seconds to a forensic investigation."
+  },
+  {
+    patterns: ["when you get a chance", "when you have a chance", "at your convenience"],
+    translation: "This is positioned as non-urgent, but it may still be expected soon.",
+    intent: "Make a request without sounding demanding.",
+    action: "Confirm priority against your current work if timing matters.",
+    risk: "🟢 Soft Request",
+    survival: "Convenience is a surprisingly elastic deadline."
+  },
+  {
+    patterns: ["by end of day", "eod", "close of business", "cob"],
+    translation: "A same-day deadline has been set.",
+    intent: "Create urgency and obtain a near-term result.",
+    action: "Confirm the timezone, exact deliverable, and whether anything else should move.",
+    risk: "🔴 Same-Day Deadline",
+    survival: "EOD has more time zones than most project plans."
+  },
+  {
+    patterns: ["by tomorrow", "need this tomorrow", "tomorrow morning"],
+    translation: "The turnaround expectation is very short.",
+    intent: "Accelerate delivery.",
+    action: "Clarify the minimum acceptable output and identify what must be deprioritized.",
+    risk: "🔴 Compressed Timeline",
+    survival: "Tomorrow is a date, not an effort estimate."
+  },
+  {
+    patterns: ["hard stop", "i have a hard stop", "hard stop at"],
+    translation: "The meeting must end at a specific time.",
+    intent: "Protect a fixed commitment that follows.",
+    action: "Prioritize decisions first and park lower-value discussion.",
+    risk: "🟢 Time Boundary",
+    survival: "A hard stop is one of the few corporate phrases that means exactly what it says."
+  },
+  {
+    patterns: ["we're tight on time", "we are tight on time", "short on time"],
+    translation: "There is not enough time for the full discussion.",
+    intent: "Force prioritization and keep the meeting moving.",
+    action: "State the decision needed and defer detail that does not affect it.",
+    risk: "🟡 Time Pressure",
+    survival: "This is not the moment for slide 37."
+  },
+  {
+    patterns: ["we don't have bandwidth", "we do not have bandwidth", "no bandwidth", "limited bandwidth"],
+    translation: "The team does not currently have enough capacity.",
+    intent: "Signal that new work would displace existing commitments.",
+    action: "Ask what should be deprioritized, delayed, or reassigned.",
+    risk: "🔴 Capacity Constraint",
+    survival: "Bandwidth is usually people wearing too many hats, not a network cable."
+  },
+  {
+    patterns: ["we need more resources", "resource constraint", "resource constraints", "under resourced"],
+    translation: "The current team may not have enough people, skills, or time.",
+    intent: "Surface a delivery risk caused by insufficient capacity.",
+    action: "Quantify the gap and connect it to specific outcomes or dates.",
+    risk: "🔴 Resourcing Risk",
+    survival: "Headcount conversations improve when translated into delivery impact."
+  },
+  {
+    patterns: ["there are dependencies", "dependency", "dependencies", "dependent on"],
+    translation: "Progress relies on another team, system, decision, or event.",
+    intent: "Explain why the work cannot move independently.",
+    action: "Name each dependency, owner, due date, and fallback plan.",
+    risk: "🟡 Dependency Risk",
+    survival: "An unnamed dependency is just a future surprise."
+  },
+  {
+    patterns: ["we're blocked", "we are blocked", "blocker", "blocked by"],
+    translation: "Work cannot progress until something external changes.",
+    intent: "Escalate an obstacle that requires action outside the immediate team.",
+    action: "State the blocker, owner, business impact, and exact unblock request.",
+    risk: "🔴 Delivery Blocker",
+    survival: "A blocker without an owner is a decorative status update."
+  },
+  {
+    patterns: ["we need to escalate", "escalate this", "raising this", "raise this"],
+    translation: "The issue needs attention from someone with more authority or reach.",
+    intent: "Get a decision, priority, resource, or intervention that the current level cannot provide.",
+    action: "Escalate facts, impact, options, and the decision required—not just frustration.",
+    risk: "🔴 Escalation",
+    survival: "Good escalation shortens a problem. Bad escalation only enlarges the audience."
+  },
+  {
+    patterns: ["i want to push back", "we should push back", "push back on this"],
+    translation: "The request or assumption should be challenged.",
+    intent: "Protect scope, standards, capacity, or a better decision.",
+    action: "Use evidence and alternatives rather than a flat no.",
+    risk: "🟡 Constructive Challenge",
+    survival: "Push back works best when it comes with a path forward."
+  },
+  {
+    patterns: ["we need to hold the line", "hold the line"],
+    translation: "Do not relax the agreed boundary, standard, or commitment.",
+    intent: "Prevent exception creep or erosion of a prior decision.",
+    action: "Restate the agreed rule and what would justify changing it.",
+    risk: "🟡 Boundary Protection",
+    survival: "Exceptions have a habit of becoming precedents."
+  },
+  {
+    patterns: ["this is a priority", "top priority", "high priority"],
+    translation: "This work is expected to move ahead of something else.",
+    intent: "Signal importance and speed.",
+    action: "Ask what specifically should be deprioritized to make room.",
+    risk: "🔴 Priority Shift",
+    survival: "A priority without a trade-off is just an aspiration."
+  },
+  {
+    patterns: ["mission critical", "business critical", "critical path"],
+    translation: "Failure or delay would have significant business impact.",
+    intent: "Justify stronger attention, resilience, or urgency.",
+    action: "Define the actual impact and the controls required because of it.",
+    risk: "🔴 Critical Work",
+    survival: "Critical should describe consequence, not enthusiasm."
+  },
+  {
+    patterns: ["table stakes", "this is table stakes"],
+    translation: "This is considered a basic requirement, not a differentiator.",
+    intent: "Frame the capability as mandatory for credibility or competitiveness.",
+    action: "Confirm whether it is truly mandatory and what minimum standard applies.",
+    risk: "🟢 Baseline Requirement",
+    survival: "Today's differentiator is tomorrow's table stakes."
+  },
+  {
+    patterns: ["move the needle", "moving the needle"],
+    translation: "Create a measurable improvement that matters.",
+    intent: "Focus effort on outcomes rather than activity.",
+    action: "Ask which metric should change and by how much.",
+    risk: "🟢 Outcome Focus",
+    survival: "Needle movement requires an actual gauge."
+  },
+  {
+    patterns: ["value add", "value-add", "add value"],
+    translation: "The work should produce a benefit beyond simply completing a task.",
+    intent: "Justify effort through business impact.",
+    action: "Name the measurable benefit: time, cost, risk, revenue, quality, or experience.",
+    risk: "🟢 Value Check",
+    survival: "If the value cannot be described, the hyphen will not save it."
+  },
+  {
+    patterns: ["pain point", "pain points"],
+    translation: "There is a recurring problem causing effort, delay, cost, or frustration.",
+    intent: "Identify a problem worth solving.",
+    action: "Quantify who experiences it, how often, and what it costs.",
+    risk: "🟢 Problem Identified",
+    survival: "Not every inconvenience graduates to a pain point."
+  },
+  {
+    patterns: ["north star", "north-star"],
+    translation: "This is the guiding outcome or principle used to make trade-offs.",
+    intent: "Create a stable direction amid many decisions.",
+    action: "Translate the north star into measurable decision criteria.",
+    risk: "🟢 Strategic Direction",
+    survival: "A north star is useful only if people occasionally look up."
+  },
+  {
+    patterns: ["strategic alignment", "aligned to strategy", "align to strategy"],
+    translation: "The work needs a clearer connection to organizational priorities.",
+    intent: "Justify investment and prioritization.",
+    action: "State which strategic objective this supports and how success will be measured.",
+    risk: "🟡 Strategy Check",
+    survival: "Adding the word strategic does not automatically create a strategy."
+  },
+  {
+    patterns: ["operationalize", "operationalise"],
+    translation: "Turn the idea or policy into a repeatable way of working.",
+    intent: "Move from concept to process, ownership, tooling, and evidence.",
+    action: "Define owner, workflow, controls, metrics, and review cadence.",
+    risk: "🟢 Execution Mode",
+    survival: "A policy becomes real when someone knows what to do on Tuesday morning."
+  },
+  {
+    patterns: ["streamline", "streamlining"],
+    translation: "Reduce unnecessary steps, delay, or complexity.",
+    intent: "Improve efficiency without losing required controls.",
+    action: "Map the current process and remove specific non-value-adding steps.",
+    risk: "🟢 Efficiency Opportunity",
+    survival: "Streamlining should remove friction, not visibility."
+  },
+  {
+    patterns: ["right size", "right-size", "right sizing", "right-sizing"],
+    translation: "Adjust the solution, team, or process to fit the actual need.",
+    intent: "Avoid overengineering or excess cost.",
+    action: "Define the demand, constraints, and target operating level before changing capacity.",
+    risk: "🟡 Optimization",
+    survival: "Right-sizing sounds much friendlier than cutting or rebuilding."
+  },
+  {
+    patterns: ["leverage", "leverage existing", "we can leverage"],
+    translation: "Use something we already have instead of building from scratch.",
+    intent: "Reuse capability, relationships, technology, or knowledge.",
+    action: "Confirm that reuse is actually cheaper, suitable, and supportable.",
+    risk: "🟢 Reuse Opportunity",
+    survival: "Sometimes 'leverage' means reuse. Sometimes it means 'please make this system do one more thing.'"
+  },
+  {
+    patterns: ["synergy", "synergies"],
+    translation: "Two things are expected to create more value together than separately.",
+    intent: "Justify consolidation, collaboration, or integration.",
+    action: "Name the specific benefit and how it will be measured.",
+    risk: "🟡 Benefit Ambiguity",
+    survival: "Synergy becomes real when it survives a spreadsheet."
+  },
+  {
+    patterns: ["deep dive", "deep-dive", "let's deep dive", "lets deep dive"],
+    translation: "We need a detailed examination of this topic.",
+    intent: "Understand root causes, design choices, or evidence.",
+    action: "Define the questions to answer and who actually needs to attend.",
+    risk: "🟢 Detailed Review",
+    survival: "Bring oxygen. The meeting may go below 10,000 feet."
+  },
+  {
+    patterns: ["drill down", "drill into", "drill deeper"],
+    translation: "Move from summary to more detailed information.",
+    intent: "Validate or understand what sits beneath a headline.",
+    action: "Focus on the specific metric, component, or decision that needs detail.",
+    risk: "🟢 Detail Requested",
+    survival: "The corporate geology expedition has begun."
+  },
+  {
+    patterns: ["connect the dots", "connect dots"],
+    translation: "Show how separate facts, teams, or events relate to the larger story.",
+    intent: "Create a coherent explanation or business narrative.",
+    action: "Make the causal links explicit rather than assuming the audience sees them.",
+    risk: "🟢 Synthesis Needed",
+    survival: "The dots rarely connect themselves in PowerPoint."
+  },
+  {
+    patterns: ["granular", "more granular", "granularity"],
+    translation: "More detailed information is required.",
+    intent: "Reduce ambiguity by getting closer to the underlying data or steps.",
+    action: "Ask which dimension needs more detail: owner, date, cost, control, system, or task.",
+    risk: "🟢 Detail Requested",
+    survival: "There is always one more level of granularity."
+  },
+  {
+    patterns: ["big picture", "zoom out", "step back"],
+    translation: "We are getting lost in details and need to return to the overall objective.",
+    intent: "Reorient the discussion around outcomes and priorities.",
+    action: "Restate the goal, current state, major risks, and decision needed.",
+    risk: "🟢 Reframing",
+    survival: "Sometimes the fastest way forward is to stop discussing column G."
+  },
+  {
+    patterns: ["from a 30,000 foot view", "30000 foot view", "30,000-foot view"],
+    translation: "Give the executive summary, not the implementation detail.",
+    intent: "Understand direction and major trade-offs quickly.",
+    action: "Cover objective, current state, key risks, and next decision.",
+    risk: "🟢 Executive Summary",
+    survival: "Cabin pressure is optional; clarity is not."
+  },
+  {
+    patterns: ["optics", "the optics", "bad optics"],
+    translation: "How this will be perceived matters in addition to the technical facts.",
+    intent: "Manage stakeholder, customer, regulatory, or leadership perception.",
+    action: "Separate actual risk from perception risk, then address both explicitly.",
+    risk: "🟡 Perception Risk",
+    survival: "Optics cannot replace substance, but substance can still have optics."
+  },
+  {
+    patterns: ["socialize", "socialise", "socialize the idea", "socialise the idea"],
+    translation: "Share the idea with more people before formalizing it.",
+    intent: "Build awareness, feedback, or support before a decision.",
+    action: "Identify the specific stakeholders and what input you need from each.",
+    risk: "🟡 Stakeholder Expansion",
+    survival: "Your draft is about to begin networking."
+  },
+  {
+    patterns: ["run it up the flagpole", "run this up the flagpole"],
+    translation: "Take this idea to senior stakeholders and see whether it gets support.",
+    intent: "Test approval or appetite before investing further.",
+    action: "Present the decision, rationale, risks, and ask clearly.",
+    risk: "🟡 Leadership Check",
+    survival: "If nobody salutes, ask for feedback before lowering the flag."
+  },
+  {
+    patterns: ["temperature check", "take the temperature", "read the room"],
+    translation: "Gauge how people feel before forcing a decision.",
+    intent: "Understand support, resistance, or uncertainty.",
+    action: "Ask directly for concerns or confidence rather than relying only on silence.",
+    risk: "🟡 Sentiment Check",
+    survival: "Silence is not always alignment; sometimes everyone is on mute."
+  },
+  {
+    patterns: ["are we comfortable with", "is everyone comfortable with"],
+    translation: "A soft approval check is being requested.",
+    intent: "Test whether there are objections before moving on.",
+    action: "If the decision matters, convert comfort into explicit approval or dissent.",
+    risk: "🟡 Soft Approval",
+    survival: "Comfort is a feeling. Governance usually prefers a decision."
+  },
+  {
+    patterns: ["any objections", "does anyone object", "speak now"],
+    translation: "The group is being given a final chance to challenge the direction.",
+    intent: "Close discussion and proceed unless material concerns remain.",
+    action: "Raise concrete risks now, or document agreement and move forward.",
+    risk: "🟢 Decision Closure",
+    survival: "This is the corporate version of the train doors closing."
+  },
+  {
+    patterns: ["we have consensus", "consensus", "we're aligned", "we are aligned"],
+    translation: "The group is believed to agree on the direction.",
+    intent: "Close debate and move into execution.",
+    action: "Capture the actual decision, owner, date, and any dissenting conditions.",
+    risk: "🟢 Alignment Achieved",
+    survival: "Consensus is strongest when it survives the meeting minutes."
+  },
+  {
+    patterns: ["let's table this", "lets table this", "table this"],
+    translation: "Stop discussing this topic for now.",
+    intent: "Defer the issue to protect time or await more information.",
+    action: "Record why it is deferred and when it will return.",
+    risk: "🟡 Deferred Decision",
+    survival: "Tabling without a return date can become elegant abandonment."
+  },
+  {
+    patterns: ["put a pin in it", "pin this", "put a pin"],
+    translation: "Pause this topic and return to it later.",
+    intent: "Avoid derailing the current discussion.",
+    action: "Capture the item and assign a revisit point.",
+    risk: "🟡 Deferred Topic",
+    survival: "Pins are cheap. Follow-through is the premium feature."
+  },
+  {
+    patterns: ["action item", "action items", "takeaway", "takeaways"],
+    translation: "Something specific should happen after this discussion.",
+    intent: "Convert conversation into accountable work.",
+    action: "Record owner, action, due date, and expected output.",
+    risk: "🟢 Execution Required",
+    survival: "An action item without an owner is meeting décor."
+  },
+  {
+    patterns: ["next steps", "what are the next steps"],
+    translation: "The discussion needs to turn into an execution plan.",
+    intent: "Create momentum after a decision or review.",
+    action: "Define the next 1–3 actions, owners, and dates.",
+    risk: "🟢 Execution Required",
+    survival: "A meeting earns its keep when the next steps are obvious."
+  },
+  {
+    patterns: ["who needs to be in the room", "right people in the room", "right stakeholders"],
+    translation: "The current group may not have the authority or expertise needed.",
+    intent: "Improve decision quality by involving the necessary people.",
+    action: "List decision maker, subject-matter experts, impacted owners, and required approvers.",
+    risk: "🟡 Stakeholder Gap",
+    survival: "More attendees are not automatically the same as the right attendees."
+  },
+  {
+    patterns: ["decision maker", "who can make the decision", "decision owner"],
+    translation: "Authority for the decision is unclear.",
+    intent: "Identify who can actually approve or reject the path forward.",
+    action: "Name one decision owner and the input they need.",
+    risk: "🔴 Decision Gap",
+    survival: "Meetings move faster once someone is legally allowed to say yes."
+  },
+  {
+    patterns: ["decision log", "log the decision", "document the decision"],
+    translation: "The decision should be recorded so it is not re-litigated later.",
+    intent: "Create traceability and institutional memory.",
+    action: "Capture date, decision, rationale, owner, and conditions.",
+    risk: "🟢 Governance Good Practice",
+    survival: "Future-you appreciates present-you writing things down."
+  },
+  {
+    patterns: ["let's be data driven", "lets be data driven", "data-driven", "data driven"],
+    translation: "The decision should be supported by evidence rather than preference alone.",
+    intent: "Reduce opinion battles and improve confidence.",
+    action: "Agree on the metric, source, time period, and threshold before debating conclusions.",
+    risk: "🟢 Evidence Requested",
+    survival: "Data can settle arguments only after everyone agrees which data counts."
+  },
+  {
+    patterns: ["what does the data say", "show me the data", "where is the data"],
+    translation: "Evidence is being requested before accepting the claim.",
+    intent: "Validate an assumption or challenge anecdotal reasoning.",
+    action: "Provide the source, definition, timeframe, and relevant caveats.",
+    risk: "🟢 Evidence Requested",
+    survival: "A chart without definitions is just colorful confidence."
+  },
+  {
+    patterns: ["root cause", "root-cause", "rca"],
+    translation: "We need to understand why the problem happened, not only patch the symptom.",
+    intent: "Prevent recurrence through corrective action.",
+    action: "Separate trigger, contributing factors, control gaps, and corrective actions.",
+    risk: "🔴 Problem Investigation",
+    survival: "If the root cause is 'human error,' keep digging."
+  },
+  {
+    patterns: ["lessons learned", "lesson learned", "retrospective"],
+    translation: "We should capture what to repeat and what to change next time.",
+    intent: "Turn experience into process improvement.",
+    action: "Document specific changes with owners rather than general observations.",
+    risk: "🟢 Continuous Improvement",
+    survival: "A lesson is only learned after behavior changes."
+  },
+  {
+    patterns: ["best practice", "best practices"],
+    translation: "A commonly accepted approach is being proposed as the preferred baseline.",
+    intent: "Reduce risk by using proven patterns.",
+    action: "Check whether the practice fits this context rather than copying it blindly.",
+    risk: "🟢 Proven Pattern",
+    survival: "Best practice is context-sensitive despite the confident branding."
+  },
+  {
+    patterns: ["guardrails", "guardrail", "put guardrails"],
+    translation: "Boundaries are needed so teams can move quickly without unacceptable risk.",
+    intent: "Enable autonomy within defined limits.",
+    action: "Specify what is allowed, prohibited, monitored, and who can approve exceptions.",
+    risk: "🟢 Controlled Autonomy",
+    survival: "Good guardrails enable speed; bad ones merely decorate the road."
+  },
+  {
+    patterns: ["governance", "governance process", "governance framework"],
+    translation: "Decision rights, controls, evidence, and oversight need to be defined.",
+    intent: "Make execution accountable and repeatable.",
+    action: "Clarify owners, approvals, artifacts, exceptions, and review cadence.",
+    risk: "🟡 Governance Needed",
+    survival: "Governance is useful when it helps decisions—not when it only creates folders."
+  },
+  {
+    patterns: ["control framework", "control environment", "controls"],
+    translation: "Specific safeguards are needed to keep risk within acceptable limits.",
+    intent: "Translate risk into preventive, detective, or corrective measures.",
+    action: "Map each material risk to an owner, control, evidence, and test method.",
+    risk: "🟡 Risk Control",
+    survival: "A control that nobody operates is just a sentence."
+  },
+  {
+    patterns: ["risk appetite", "risk tolerance"],
+    translation: "The organization needs to decide how much risk it is willing to accept.",
+    intent: "Set boundaries for decision-making and escalation.",
+    action: "Define measurable thresholds and who can approve exceptions.",
+    risk: "🟡 Risk Decision",
+    survival: "Risk appetite is more useful as a threshold than as a paragraph."
+  },
+  {
+    patterns: ["acceptable risk", "risk accepted", "accept the risk"],
+    translation: "The remaining risk is being consciously tolerated.",
+    intent: "Proceed despite known exposure because mitigation may not be proportionate.",
+    action: "Record rationale, approver, duration, conditions, and review date.",
+    risk: "🔴 Risk Acceptance",
+    survival: "Accepted risk should come with a signature, not amnesia."
+  },
+  {
+    patterns: ["mitigate", "mitigation", "risk mitigation"],
+    translation: "Reduce the likelihood or impact of a known risk.",
+    intent: "Bring exposure within an acceptable level.",
+    action: "Define the control, owner, target date, residual risk, and evidence.",
+    risk: "🟡 Risk Treatment",
+    survival: "Mitigation without ownership is optimism with formatting."
+  },
+  {
+    patterns: ["contingency plan", "fallback plan", "plan b"],
+    translation: "A backup path is needed if the primary approach fails.",
+    intent: "Reduce disruption and recovery time.",
+    action: "Define trigger, owner, alternate process, and communication steps.",
+    risk: "🟢 Resilience",
+    survival: "Plan B works best when it exists before Plan A needs help."
+  },
+  {
+    patterns: ["single point of failure", "spof"],
+    translation: "One dependency could cause the entire process or service to fail.",
+    intent: "Highlight a resilience weakness.",
+    action: "Add redundancy, failover, alternate ownership, or a tested recovery path.",
+    risk: "🔴 Resilience Risk",
+    survival: "If one person, server, or spreadsheet can stop everything, it deserves attention."
+  },
+  {
+    patterns: ["technical debt", "tech debt"],
+    translation: "A shortcut or legacy decision is creating future cost or risk.",
+    intent: "Explain why maintenance or modernization work is necessary.",
+    action: "Quantify the impact and create a prioritized remediation plan.",
+    risk: "🟡 Sustainability Risk",
+    survival: "Technical debt charges interest, usually during an incident."
+  },
+  {
+    patterns: ["future proof", "future-proof", "futureproof"],
+    translation: "Design this so foreseeable growth or change does not force immediate rework.",
+    intent: "Protect the investment against likely evolution.",
+    action: "Specify which future scenarios you are actually designing for.",
+    risk: "🟡 Design Ambition",
+    survival: "Future-proofing every possible future is how present projects become archaeology."
+  },
+  {
+    patterns: ["scalable", "scale this", "at scale"],
+    translation: "The solution should continue working as demand grows.",
+    intent: "Avoid designs that fail under higher volume, users, regions, or complexity.",
+    action: "Define expected scale, bottlenecks, cost curve, and test thresholds.",
+    risk: "🟢 Growth Readiness",
+    survival: "Scalable is measurable. 'A lot more' is not."
+  },
+  {
+    patterns: ["production ready", "production-ready", "ready for production"],
+    translation: "The solution must meet operational, security, support, and reliability expectations—not just function in testing.",
+    intent: "Confirm readiness for real users and real consequences.",
+    action: "Validate monitoring, support, security, rollback, capacity, access, documentation, and approvals.",
+    risk: "🔴 Release Readiness",
+    survival: "It worked on a laptop is not a production criterion."
+  },
+  {
+    patterns: ["go live", "go-live", "production deployment"],
+    translation: "The change is moving into the live environment.",
+    intent: "Put the capability into real operational use.",
+    action: "Confirm approvals, validation, rollback, monitoring, support coverage, and communications.",
+    risk: "🔴 Change Event",
+    survival: "Go-live is when assumptions meet customers."
+  },
+  {
+    patterns: ["rollback", "roll back", "backout plan", "back-out plan"],
+    translation: "We need a safe way to undo the change if it causes problems.",
+    intent: "Limit impact from a failed deployment.",
+    action: "Define trigger, steps, owner, data implications, and maximum rollback time.",
+    risk: "🟢 Resilience Control",
+    survival: "A rollback plan written during the outage is technically still a plan, just late."
+  },
+  {
+    patterns: ["smoke test", "sanity check", "quick validation"],
+    translation: "Run a focused check that the critical path still works.",
+    intent: "Catch obvious failures quickly after a change.",
+    action: "Define the few tests that prove core functionality and dependencies are healthy.",
+    risk: "🟢 Validation",
+    survival: "A smoke test is not permission to skip full testing."
+  },
+  {
+    patterns: ["sign off", "sign-off", "formal approval"],
+    translation: "Someone with authority must explicitly approve the outcome or release.",
+    intent: "Create accountable evidence that required review occurred.",
+    action: "Capture approver, date, scope, conditions, and evidence reviewed.",
+    risk: "🟢 Approval Required",
+    survival: "A thumbs-up emoji may not satisfy every auditor."
+  },
+  {
+    patterns: ["business sign off", "business approval", "business sign-off"],
+    translation: "The business owner needs to confirm the solution meets the intended need.",
+    intent: "Validate fitness for purpose before closure or release.",
+    action: "Agree on acceptance criteria and retain the approval evidence.",
+    risk: "🟢 Business Approval",
+    survival: "Technical success and business acceptance are related but not identical."
+  },
+  {
+    patterns: ["we need buy in", "need buy-in", "stakeholder buy in", "stakeholder buy-in"],
+    translation: "Key people need to support the direction before it will stick.",
+    intent: "Reduce resistance and improve execution.",
+    action: "Identify what each stakeholder cares about and resolve material objections.",
+    risk: "🟡 Adoption Risk",
+    survival: "Buy-in is easier when people are consulted before the announcement."
+  },
+  {
+    patterns: ["change management", "organizational change", "adoption plan"],
+    translation: "People, process, communication, and training need attention—not just the technology.",
+    intent: "Increase adoption and reduce disruption.",
+    action: "Define impacted groups, communications, training, support, and success measures.",
+    risk: "🟡 Adoption Risk",
+    survival: "A technically perfect system can still lose to a spreadsheet people understand."
+  },
+  {
+    patterns: ["quick turnaround", "fast turnaround"],
+    translation: "Delivery is expected sooner than the normal cycle.",
+    intent: "Accelerate completion.",
+    action: "Clarify the minimum viable output and what standard steps cannot be skipped.",
+    risk: "🔴 Compressed Timeline",
+    survival: "Fast is a schedule. Safe is a constraint. Both need planning."
+  },
+  {
+    patterns: ["minimum viable", "mvp", "minimum viable product"],
+    translation: "Deliver the smallest version that proves value or learning.",
+    intent: "Reduce time and investment before scaling.",
+    action: "Agree on what is truly essential and what is explicitly out of scope.",
+    risk: "🟢 Scope Discipline",
+    survival: "MVP means minimum viable, not minimum documented."
+  },
+  {
+    patterns: ["phase two", "phase 2", "future phase"],
+    translation: "This is being deferred beyond the current delivery scope.",
+    intent: "Protect the current release from expanding indefinitely.",
+    action: "Record the deferred item, rationale, and prioritization trigger.",
+    risk: "🟡 Deferred Scope",
+    survival: "Phase Two is where many good ideas go to become folklore."
+  },
+  {
+    patterns: ["nice to have", "nice-to-have"],
+    translation: "This is desirable but not required for the current outcome.",
+    intent: "Separate optional enhancements from essential scope.",
+    action: "Keep it below must-have items unless value or risk justifies promotion.",
+    risk: "🟢 Optional Scope",
+    survival: "Nice-to-have has saved many deadlines when treated honestly."
+  },
+  {
+    patterns: ["must have", "must-have", "non negotiable", "non-negotiable"],
+    translation: "This requirement is being treated as essential.",
+    intent: "Protect a critical need or constraint.",
+    action: "Ask what consequence makes it mandatory and ensure it is reflected in acceptance criteria.",
+    risk: "🔴 Mandatory Requirement",
+    survival: "Non-negotiable items deserve very clear definitions."
+  },
+  {
+    patterns: ["we can revisit later", "revisit this later", "come back to this later"],
+    translation: "The topic is being deferred without necessarily being rejected.",
+    intent: "Protect current focus while leaving the option open.",
+    action: "Set a trigger or date for reconsideration if it genuinely matters.",
+    risk: "🟡 Deferred Decision",
+    survival: "Later is not yet a date."
+  },
+  {
+    patterns: ["no concerns from my side", "no concerns on my side", "looks good to me", "lgtm"],
+    translation: "No material objection is being raised.",
+    intent: "Signal acceptance or readiness to proceed.",
+    action: "If formal approval is required, make the approval explicit and record it.",
+    risk: "🟢 Positive Review",
+    survival: "'Looks good' is reassuring; 'approved' is traceable."
+  },
+  {
+    patterns: ["noted", "duly noted"],
+    translation: "The information has been acknowledged.",
+    intent: "Confirm receipt without necessarily agreeing or acting.",
+    action: "Do not assume action unless the next step is explicit.",
+    risk: "🟢 Acknowledged",
+    survival: "One word can acknowledge a paragraph without adopting it."
+  },
+  {
+    patterns: ["understood", "makes sense"],
+    translation: "The message has been understood, at least at a high level.",
+    intent: "Acknowledge and signal alignment with the explanation.",
+    action: "If action is required, confirm the next step separately.",
+    risk: "🟢 Acknowledged",
+    survival: "Understanding and ownership are cousins, not twins."
+  },
+  {
+    patterns: ["let me check", "i'll check", "i will check", "let me look into it"],
+    translation: "The answer is not available yet and someone needs to investigate.",
+    intent: "Buy time to verify facts before responding.",
+    action: "Give a return time and specify what you will verify.",
+    risk: "🟡 Follow-up Required",
+    survival: "'I'll check' becomes useful when paired with 'by when.'"
+  },
+  {
+    patterns: ["i'll get back to you", "i will get back to you", "get back to you"],
+    translation: "A response will come later after more information or thought.",
+    intent: "Avoid giving an uncertain answer now.",
+    action: "Set a specific follow-up time if the issue is time-sensitive.",
+    risk: "🟡 Follow-up Required",
+    survival: "The phrase works better with a calendar attached."
+  },
+  {
+    patterns: ["can you send me", "please send me", "share this with me", "can you share"],
+    translation: "A specific artifact or information is being requested.",
+    intent: "Obtain evidence, context, or a deliverable.",
+    action: "Clarify the exact item, format, and deadline if not obvious.",
+    risk: "🟢 Direct Request",
+    survival: "One of corporate life's rare low-ambiguity sentences."
+  },
+  {
+    patterns: ["send me a summary", "executive summary", "one pager", "one-pager"],
+    translation: "Condense the material into a short decision-friendly format.",
+    intent: "Help someone understand the essentials quickly.",
+    action: "Include objective, status, key risks, decision needed, and next steps.",
+    risk: "🟢 Executive Communication",
+    survival: "A one-pager is not a 12-slide deck printed small."
+  },
+  {
+    patterns: ["net net", "net-net", "bottom line"],
+    translation: "Give the conclusion without the supporting detail.",
+    intent: "Get to the decision or outcome quickly.",
+    action: "State the answer, impact, and required action in one or two sentences.",
+    risk: "🟢 Executive Mode",
+    survival: "The appendix can wait."
+  },
+  {
+    patterns: ["in a nutshell", "short version", "long story short"],
+    translation: "Summarize the issue briefly.",
+    intent: "Reduce complexity for faster understanding.",
+    action: "Give context, conclusion, and next action—then stop.",
+    risk: "🟢 Concise Summary",
+    survival: "The nutshell has limited storage."
+  },
+  {
+    patterns: ["i don't want to overcomplicate this", "don't overcomplicate", "keep it simple"],
+    translation: "The proposed solution may be becoming more complex than the need requires.",
+    intent: "Reduce design or process overhead.",
+    action: "Restate the core requirement and remove elements that do not materially support it.",
+    risk: "🟡 Complexity Check",
+    survival: "Simple is excellent. Simplistic is a different product."
+  },
+  {
+    patterns: ["we're overthinking this", "we are overthinking this", "overthinking"],
+    translation: "The discussion may be spending more effort on uncertainty than the decision warrants.",
+    intent: "Move toward a practical decision.",
+    action: "Identify the few unknowns that materially change the outcome and time-box the rest.",
+    risk: "🟡 Analysis Drag",
+    survival: "Eventually analysis needs to produce a verb."
+  },
+  {
+    patterns: ["let's be pragmatic", "lets be pragmatic", "pragmatic approach"],
+    translation: "Choose a workable solution given real constraints, not the theoretically perfect one.",
+    intent: "Balance speed, risk, cost, and quality.",
+    action: "State the trade-off explicitly and document what will be revisited later.",
+    risk: "🟢 Practical Trade-off",
+    survival: "Pragmatic should mean conscious compromise, not invisible compromise."
+  },
+  {
+    patterns: ["we need a workaround", "workaround", "temporary fix"],
+    translation: "The preferred solution is not available soon enough, so an interim path is needed.",
+    intent: "Restore service or progress while a durable fix is developed.",
+    action: "Set an expiry date, owner, risk controls, and permanent remediation plan.",
+    risk: "🟡 Temporary Solution",
+    survival: "Temporary fixes have excellent survival instincts."
+  },
+  {
+    patterns: ["permanent fix", "long term fix", "long-term fix"],
+    translation: "The underlying issue should be resolved rather than repeatedly patched.",
+    intent: "Remove recurring operational or risk cost.",
+    action: "Address the root cause and define how recurrence will be prevented.",
+    risk: "🟢 Durable Remediation",
+    survival: "A permanent fix deserves more than a renamed workaround."
+  },
+  {
+    patterns: ["can we automate this", "automate this", "automation opportunity"],
+    translation: "A repetitive manual process may be a candidate for automation.",
+    intent: "Reduce effort, delay, or error.",
+    action: "Check volume, variability, controls, exception handling, and maintenance cost before automating.",
+    risk: "🟢 Automation Opportunity",
+    survival: "Automating a broken process can produce broken results at impressive speed."
+  },
+  {
+    patterns: ["manual process", "manual intervention", "manual step"],
+    translation: "Human effort is required where automation or system support may be limited.",
+    intent: "Describe an operational dependency or control point.",
+    action: "Assess frequency, error risk, capacity, evidence, and whether automation is justified.",
+    risk: "🟡 Operational Risk",
+    survival: "Manual is not automatically bad; undocumented manual is exciting in the wrong way."
+  },
+  {
+    patterns: ["human in the loop", "human-in-the-loop", "human review"],
+    translation: "A person must review, decide, or intervene at a defined point.",
+    intent: "Add judgment or accountability where automation alone is not sufficient.",
+    action: "Define when review is required, what evidence is shown, who can override, and how actions are logged.",
+    risk: "🟢 Human Oversight",
+    survival: "A human in the loop needs more than a chair near the system."
+  },
+  {
+    patterns: ["we need traceability", "traceability", "audit trail"],
+    translation: "Decisions and actions must be reconstructable later.",
+    intent: "Support accountability, audit, troubleshooting, or regulatory evidence.",
+    action: "Record who did what, when, why, and against which version or input.",
+    risk: "🟢 Evidence Requirement",
+    survival: "If nobody can reconstruct it later, it effectively happened in folklore."
+  },
+  {
+    patterns: ["document this", "please document", "needs documentation"],
+    translation: "The knowledge or decision should not remain only in conversation.",
+    intent: "Create a durable record for reuse, audit, or handoff.",
+    action: "Capture purpose, owner, date, decision, dependencies, and next steps in the agreed location.",
+    risk: "🟢 Documentation",
+    survival: "Future teammates cannot search your memory."
+  },
+  {
+    patterns: ["knowledge transfer", "kt session", "handover", "hand off"],
+    translation: "Information or operational responsibility needs to move from one person or team to another.",
+    intent: "Reduce dependency on the current owner and enable continuity.",
+    action: "Cover architecture, runbooks, access, known issues, contacts, and practical walkthroughs.",
+    risk: "🟡 Continuity Risk",
+    survival: "A 90-minute call is not automatically knowledge transfer."
+  },
+  {
+    patterns: ["bus factor", "key person dependency", "single person dependency"],
+    translation: "Too much critical knowledge or access sits with one person.",
+    intent: "Highlight continuity risk.",
+    action: "Document, cross-train, distribute access, and test that another person can perform the work.",
+    risk: "🔴 Continuity Risk",
+    survival: "Vacations are an excellent resilience test."
   }
+
 ];
 
 const fallbackRules = [
@@ -196,20 +1037,45 @@ function translatePhrase(input) {
   const clean = normalize(input);
 
   for (const item of phrases) {
-    if (item.patterns.some(pattern => clean.includes(pattern))) return item;
+    if (item.patterns.some(pattern => clean.includes(pattern))) {
+      return { data: item, source: "dictionary" };
+    }
   }
 
   for (const rule of fallbackRules) {
-    if (rule.words.some(word => clean.includes(word))) return rule;
+    if (rule.words.some(word => clean.includes(word))) {
+      return { data: rule, source: "rules" };
+    }
   }
 
-  return {
-    translation: "This phrase has not entered the corporate dictionary yet.",
-    intent: "The intent is unclear from the wording alone.",
-    action: "Ask: “What decision or action do we need from this?” Then capture the answer.",
-    risk: "🟣 Custom Jargon",
-    survival: "You may have discovered a new species of corporate language."
-  };
+  return { data: null, source: "ai" };
+}
+
+const AI_API_URL = window.CORPORATE_DECODER_AI_URL || "";
+
+async function decodeWithAI(input) {
+  if (!AI_API_URL) {
+    throw new Error("AI backend is not configured yet.");
+  }
+
+  const response = await fetch(AI_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: input })
+  });
+
+  let payload = {};
+  try {
+    payload = await response.json();
+  } catch {
+    // Keep a useful error below if the backend returned non-JSON.
+  }
+
+  if (!response.ok) {
+    throw new Error(payload.error || `AI decode failed (${response.status}).`);
+  }
+
+  return payload;
 }
 
 const phraseInput = document.getElementById("phrase");
@@ -222,15 +1088,133 @@ const action = document.getElementById("action");
 const survival = document.getElementById("survival");
 const riskBadge = document.getElementById("riskBadge");
 const copyBtn = document.getElementById("copyBtn");
+const suggestions = document.getElementById("suggestions");
 
-function render() {
-  const value = phraseInput.value.trim();
-  if (!value) {
-    phraseInput.focus();
+// Build a searchable list from every dictionary pattern while preserving
+// the nicer capitalization used by the curated examples where possible.
+const suggestionPhrases = [...new Set(phrases.flatMap(item => item.patterns))]
+  .map(text => text.replace(/^let's /, "Let's ")
+    .replace(/^lets /, "Let's ")
+    .replace(/^can we /, "Can we ")
+    .replace(/^could you /, "Could you ")
+    .replace(/^we /, "We ")
+    .replace(/^i /, "I ")
+    .replace(/^just /, "Just ")
+    .replace(/^please /, "Please ")
+    .replace(/^when /, "When ")
+    .replace(/^by /, "By ")
+    .replace(/^who /, "Who ")
+    .replace(/^what /, "What ")
+    .replace(/^any /, "Any ")
+    .replace(/^per /, "Per ")
+    .replace(/^following /, "Following ")
+    .replace(/^friendly /, "Friendly ")
+    .replace(/^gentle /, "Gentle "))
+  .sort((a, b) => a.localeCompare(b));
+
+let visibleSuggestions = [];
+let activeSuggestion = -1;
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+  })[char]);
+}
+
+function scoreSuggestion(phrase, query) {
+  const p = normalize(phrase);
+  const q = normalize(query);
+  if (p === q) return 1000;
+  if (p.startsWith(q)) return 800 - (p.length - q.length);
+  if (p.includes(q)) return 600 - p.indexOf(q);
+
+  const queryWords = q.split(" ").filter(Boolean);
+  const phraseWords = p.split(" ");
+  const allWordsMatch = queryWords.every(qw => phraseWords.some(pw => pw.startsWith(qw)));
+  return allWordsMatch ? 400 + queryWords.length * 10 : -1;
+}
+
+function highlightMatch(phrase, query) {
+  const safe = escapeHtml(phrase);
+  const q = normalize(query);
+  if (!q) return safe;
+  const index = normalize(phrase).indexOf(q);
+  if (index < 0) return safe;
+  const before = escapeHtml(phrase.slice(0, index));
+  const match = escapeHtml(phrase.slice(index, index + q.length));
+  const after = escapeHtml(phrase.slice(index + q.length));
+  return `${before}<mark>${match}</mark>${after}`;
+}
+
+function closeSuggestions() {
+  suggestions.classList.add("hidden");
+  suggestions.innerHTML = "";
+  visibleSuggestions = [];
+  activeSuggestion = -1;
+  phraseInput.setAttribute("aria-expanded", "false");
+  phraseInput.removeAttribute("aria-activedescendant");
+}
+
+function updateActiveSuggestion() {
+  suggestions.querySelectorAll(".suggestion-item").forEach((item, index) => {
+    const active = index === activeSuggestion;
+    item.classList.toggle("active", active);
+    item.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  if (activeSuggestion >= 0) {
+    const id = `suggestion-${activeSuggestion}`;
+    phraseInput.setAttribute("aria-activedescendant", id);
+    document.getElementById(id)?.scrollIntoView({ block: "nearest" });
+  } else {
+    phraseInput.removeAttribute("aria-activedescendant");
+  }
+}
+
+function selectSuggestion(index) {
+  const value = visibleSuggestions[index];
+  if (!value) return;
+  phraseInput.value = value;
+  closeSuggestions();
+  phraseInput.focus();
+  render();
+}
+
+function showSuggestions() {
+  const query = phraseInput.value.trim();
+  if (query.length < 2) {
+    closeSuggestions();
     return;
   }
 
-  const data = translatePhrase(value);
+  visibleSuggestions = suggestionPhrases
+    .map(phrase => ({ phrase, score: scoreSuggestion(phrase, query) }))
+    .filter(item => item.score >= 0)
+    .sort((a, b) => b.score - a.score || a.phrase.length - b.phrase.length)
+    .slice(0, 6)
+    .map(item => item.phrase);
+
+  if (!visibleSuggestions.length) {
+    closeSuggestions();
+    return;
+  }
+
+  activeSuggestion = -1;
+  suggestions.innerHTML = visibleSuggestions.map((phrase, index) => `
+    <button type="button" class="suggestion-item" id="suggestion-${index}"
+      role="option" aria-selected="false" data-index="${index}">
+      ${highlightMatch(phrase, query)}
+    </button>`).join("");
+
+  suggestions.classList.remove("hidden");
+  phraseInput.setAttribute("aria-expanded", "true");
+
+  suggestions.querySelectorAll(".suggestion-item").forEach(item => {
+    item.addEventListener("mousedown", event => event.preventDefault());
+    item.addEventListener("click", () => selectSuggestion(Number(item.dataset.index)));
+  });
+}
+
+function paintResult(data) {
   translation.textContent = data.translation;
   intent.textContent = data.intent;
   action.textContent = data.action;
@@ -240,14 +1224,95 @@ function render() {
   emptyState.classList.add("hidden");
 }
 
-translateBtn.addEventListener("click", render);
+function setLoading(isLoading) {
+  translateBtn.disabled = isLoading;
+  translateBtn.textContent = isLoading ? "Decoding…" : "Translate";
+}
+
+async function render() {
+  const value = phraseInput.value.trim();
+  if (!value) {
+    phraseInput.focus();
+    return;
+  }
+
+  const match = translatePhrase(value);
+  if (match.data) {
+    paintResult(match.data);
+    return;
+  }
+
+  setLoading(true);
+  result.classList.remove("hidden");
+  emptyState.classList.add("hidden");
+  riskBadge.textContent = "✨ AI Decode";
+  translation.textContent = "Reading between the corporate lines…";
+  intent.textContent = "Analyzing the wording and context clues.";
+  action.textContent = "Preparing a practical next step.";
+  survival.textContent = "One moment — the jargon is being professionally overthought.";
+
+  try {
+    const data = await decodeWithAI(value);
+    paintResult(data);
+  } catch (error) {
+    paintResult({
+      translation: "This phrase is not in the local dictionary, and the AI decoder is unavailable.",
+      intent: "The wording may still be meaningful, but it needs a broader language interpretation.",
+      action: "Try a dictionary phrase, or check the AI backend configuration.",
+      risk: "🟣 AI Fallback Unavailable",
+      survival: error.message || "Even the decoder occasionally needs a quick sync."
+    });
+  } finally {
+    setLoading(false);
+  }
+}
+
+translateBtn.addEventListener("click", () => {
+  closeSuggestions();
+  render();
+});
+
+phraseInput.addEventListener("input", showSuggestions);
+phraseInput.addEventListener("focus", showSuggestions);
 phraseInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") render();
+  if (!suggestions.classList.contains("hidden")) {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      activeSuggestion = Math.min(activeSuggestion + 1, visibleSuggestions.length - 1);
+      updateActiveSuggestion();
+      return;
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      activeSuggestion = Math.max(activeSuggestion - 1, 0);
+      updateActiveSuggestion();
+      return;
+    }
+    if (e.key === "Escape") {
+      closeSuggestions();
+      return;
+    }
+    if (e.key === "Enter" && activeSuggestion >= 0) {
+      e.preventDefault();
+      selectSuggestion(activeSuggestion);
+      return;
+    }
+  }
+
+  if (e.key === "Enter") {
+    closeSuggestions();
+    render();
+  }
+});
+
+document.addEventListener("click", e => {
+  if (!e.target.closest(".autocomplete-wrap")) closeSuggestions();
 });
 
 document.querySelectorAll(".chip").forEach(chip => {
   chip.addEventListener("click", () => {
     phraseInput.value = chip.textContent;
+    closeSuggestions();
     render();
   });
 });

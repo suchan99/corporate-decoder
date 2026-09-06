@@ -37,7 +37,7 @@ The humor makes it memorable. The action recommendation makes it useful.
 - Works entirely in the browser
 - Mobile friendly
 - Copy-to-clipboard result
-- 20+ built-in corporate phrases
+- 100+ built-in corporate phrases
 - Fallback rules for unfamiliar phrases
 - Deployable free with GitHub Pages
 
@@ -155,3 +155,14 @@ MIT
 ## Portfolio positioning
 
 This is intentionally a small static application: it demonstrates product thinking, UX, deterministic JavaScript logic, responsible design, documentation, and CI/CD deployment through GitHub Pages without introducing unnecessary infrastructure.
+
+
+## Autocomplete
+
+The phrase field now searches the built-in corporate dictionary as you type. After two characters it shows up to six matching phrases. Use the arrow keys and Enter, or click a suggestion, to select and translate it. This remains entirely browser-side and requires no API.
+
+## AI fallback for phrases outside the dictionary
+
+This version supports an optional AI fallback. The local dictionary remains the first layer; if no dictionary or local rule matches, the browser can call a serverless decoder endpoint. The API key is kept server-side and never committed to GitHub Pages.
+
+See [`AI-SETUP.md`](AI-SETUP.md) for deployment instructions. Unknown phrases are sent to the configured backend, so users should not enter confidential or regulated information into the public demo.

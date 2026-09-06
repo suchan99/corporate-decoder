@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/decode.js": {
+      "maxDuration": 15
+    }
+  }
+}
