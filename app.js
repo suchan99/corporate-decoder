@@ -998,34 +998,6 @@ const phrases = [
     action: "Document, cross-train, distribute access, and test that another person can perform the work.",
     risk: "🔴 Continuity Risk",
     survival: "Vacations are an excellent resilience test."
-  }
-
-];
-
-const fallbackRules = [
-  {
-    words: ["urgent", "asap", "immediately"],
-    translation: "Priority is being raised, but the business impact may still need definition.",
-    intent: "Accelerate action.",
-    action: "Confirm severity, deadline, business impact, and what should be deprioritized.",
-    risk: "🔴 Priority Escalation",
-    survival: "Everything cannot be P1 at the same time."
-  },
-  {
-    words: ["small", "quick", "simple", "easy", "just"],
-    translation: "The request is being framed as low effort before the work has been assessed.",
-    intent: "Move quickly with minimal friction.",
-    action: "Check dependencies and effort before making a commitment.",
-    risk: "🟡 Effort Assumption",
-    survival: "Adjectives are not estimates."
-  },
-  {
-    words: ["align", "alignment", "stakeholder"],
-    translation: "More agreement is needed before the work can move safely.",
-    intent: "Reduce disagreement or decision risk.",
-    action: "Identify the decision, approvers, and what evidence they need.",
-    risk: "🟡 Alignment Needed",
-    survival: "Alignment improves dramatically when the decision is written down."
   },
   {
     patterns: ["keep things on an even keel", "keep it on an even keel", "even keel"],
@@ -1315,6 +1287,35 @@ const fallbackRules = [
     risk: "🔴 Unspoken Issue",
     survival: "Elephants consume a surprising amount of meeting-room bandwidth."
   }
+
+];
+
+const fallbackRules = [
+  {
+    words: ["urgent", "asap", "immediately"],
+    translation: "Priority is being raised, but the business impact may still need definition.",
+    intent: "Accelerate action.",
+    action: "Confirm severity, deadline, business impact, and what should be deprioritized.",
+    risk: "🔴 Priority Escalation",
+    survival: "Everything cannot be P1 at the same time."
+  },
+  {
+    words: ["small", "quick", "simple", "easy", "just"],
+    translation: "The request is being framed as low effort before the work has been assessed.",
+    intent: "Move quickly with minimal friction.",
+    action: "Check dependencies and effort before making a commitment.",
+    risk: "🟡 Effort Assumption",
+    survival: "Adjectives are not estimates."
+  },
+  {
+    words: ["align", "alignment", "stakeholder"],
+    translation: "More agreement is needed before the work can move safely.",
+    intent: "Reduce disagreement or decision risk.",
+    action: "Identify the decision, approvers, and what evidence they need.",
+    risk: "🟡 Alignment Needed",
+    survival: "Alignment improves dramatically when the decision is written down."
+  }
+
 ];
 
 function normalize(text) {
