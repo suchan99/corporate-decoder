@@ -37,7 +37,7 @@ The humor makes it memorable. The action recommendation makes it useful.
 - Works entirely in the browser
 - Mobile friendly
 - Copy-to-clipboard result
-- 100+ built-in corporate phrases
+- 160+ built-in workplace phrase families with 450+ searchable variants
 - Fallback rules for unfamiliar phrases
 - Deployable free with GitHub Pages
 
@@ -156,6 +156,10 @@ MIT
 
 This is intentionally a small static application: it demonstrates product thinking, UX, deterministic JavaScript logic, responsible design, documentation, and CI/CD deployment through GitHub Pages without introducing unnecessary infrastructure.
 
+
+## Workplace idiom pack
+
+The local dictionary now includes a broader set of real workplace idioms, executive shorthand, project/delivery language, architecture terminology, governance language, and meeting expressions. Examples include `even keel`, `Frankenstein`, `delta`, `move the needle`, `in the weeds`, `land the plane`, `run it up the flagpole`, `ducks in a row`, `net-net`, `air cover`, `runway`, `thread the needle`, `watermelon status`, `pre-wire`, `blast radius`, and many more. These entries participate in the same browser-side autocomplete.
 
 ## Autocomplete
 

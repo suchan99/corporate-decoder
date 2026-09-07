@@ -1026,6 +1026,294 @@ const fallbackRules = [
     action: "Identify the decision, approvers, and what evidence they need.",
     risk: "🟡 Alignment Needed",
     survival: "Alignment improves dramatically when the decision is written down."
+  },
+  {
+    patterns: ["keep things on an even keel", "keep it on an even keel", "even keel"],
+    translation: "Keep the situation stable, balanced, and free of unnecessary disruption.",
+    intent: "Maintain steady progress without creating new volatility, conflict, or risk.",
+    action: "Avoid dramatic changes unless necessary; surface emerging issues early and keep decisions proportionate.",
+    risk: "🟢 Stability / Balance",
+    survival: "When someone asks for an even keel, this is usually not the moment to redesign the ship."
+  },
+  {
+    patterns: ["frankenstein solution", "frankenstein system", "frankenstein architecture", "frankenstein app", "frankenstein"],
+    translation: "The solution has been assembled from mismatched parts and may be difficult to maintain.",
+    intent: "Flag technical debt, excessive patching, or an architecture that evolved without a clean design.",
+    action: "Map the seams, dependencies, unsupported components, and the minimum path to simplify or standardize it.",
+    risk: "🔴 Technical Debt",
+    survival: "It may be alive, but nobody is completely sure who owns all the organs."
+  },
+  {
+    patterns: ["what's the delta", "whats the delta", "what is the delta", "show me the delta", "the delta between", "delta"],
+    translation: "What is different between the two versions, states, plans, numbers, or positions?",
+    intent: "Focus attention on the change rather than reviewing everything again.",
+    action: "State the baseline, the new state, and the specific differences that matter.",
+    risk: "🔵 Comparison / Change",
+    survival: "Corporate shorthand for: spare me the full deck and show me what changed."
+  },
+  {
+    patterns: ["needle mover"],
+    translation: "Create a meaningful, measurable improvement rather than a cosmetic one.",
+    intent: "Prioritize work with visible business impact.",
+    action: "Tie the proposal to a metric, outcome, or material risk reduction.",
+    risk: "🔵 Outcome Focus",
+    survival: "If the needle cannot be measured, it may currently be decorative."
+  },
+  {
+    patterns: ["in the weeds", "too far in the weeds"],
+    translation: "The discussion is getting too detailed for the current audience or decision.",
+    intent: "Pull the conversation back to the level needed to move forward.",
+    action: "Summarize the key implication, decision, and risk; park implementation detail unless requested.",
+    risk: "🟡 Detail Overload",
+    survival: "You can visit the weeds. You do not have to establish residency there."
+  },
+  {
+    patterns: ["land the plane", "let's land the plane", "lets land the plane"],
+    translation: "Bring the discussion to a conclusion and make the decision.",
+    intent: "Stop exploring and close on a next step.",
+    action: "Summarize the decision, owner, and date before the meeting ends.",
+    risk: "🔵 Decision Needed",
+    survival: "The runway is the last five minutes of the meeting. Use it wisely."
+  },
+  {
+    patterns: ["get our ducks in a row", "ducks in a row"],
+    translation: "Organize the prerequisites before moving forward.",
+    intent: "Reduce confusion by aligning people, information, and dependencies.",
+    action: "List the prerequisites, owners, and missing decisions explicitly.",
+    risk: "🟡 Readiness Gap",
+    survival: "The ducks are usually approvals, data, owners, and one person unexpectedly on PTO."
+  },
+  {
+    patterns: ["back to the drawing board"],
+    translation: "The current approach needs significant rework or a fresh design.",
+    intent: "Reset after discovering a fundamental issue.",
+    action: "Capture what invalidated the current approach before designing the next one.",
+    risk: "🔴 Rework",
+    survival: "Before redrawing the board, photograph the lesson."
+  },
+  {
+    patterns: ["raise the bar"],
+    translation: "Increase the expected standard of quality, performance, or rigor.",
+    intent: "Push the team beyond the current baseline.",
+    action: "Ask which measurable standard is changing and how success will be judged.",
+    risk: "🟡 Higher Expectation",
+    survival: "Bars are easier to raise than budgets."
+  },
+  {
+    patterns: ["game changer", "game-changing"],
+    translation: "This is being positioned as something that could materially change the outcome or way of working.",
+    intent: "Signal unusually high potential value or impact.",
+    action: "Test the claim against measurable benefits, dependencies, adoption effort, and risk.",
+    risk: "🟡 Hype Check",
+    survival: "Every game changer deserves at least one spreadsheet proving there was a game."
+  },
+  {
+    patterns: ["our north star"],
+    translation: "The guiding objective or principle that should anchor decisions.",
+    intent: "Create a stable reference point when priorities compete.",
+    action: "Translate the north star into measurable decision criteria.",
+    risk: "🟢 Strategic Direction",
+    survival: "A north star helps only if everyone agrees which sky they are looking at."
+  },
+  {
+    patterns: ["level set", "let's level set", "lets level set"],
+    translation: "Make sure everyone starts from the same facts, assumptions, and expectations.",
+    intent: "Correct mismatched context before deciding or debating.",
+    action: "State the baseline facts, what changed, and what is still uncertain.",
+    risk: "🟡 Shared Context",
+    survival: "A level set often means at least two people arrived with different maps."
+  },
+  {
+    patterns: ["keep me honest", "keep us honest"],
+    translation: "Challenge me if my facts, assumptions, or interpretation are wrong.",
+    intent: "Invite correction and reduce blind spots.",
+    action: "Validate the claim and speak up if the evidence points elsewhere.",
+    risk: "🟢 Challenge Invited",
+    survival: "One of the rare corporate phrases that may literally mean what it says."
+  },
+  {
+    patterns: ["let's put a pin in it", "lets put a pin in it"],
+    translation: "Pause the topic without losing it.",
+    intent: "Keep the current discussion focused while preserving a follow-up item.",
+    action: "Write down the item, owner, and trigger for revisiting it.",
+    risk: "🟡 Deferred Topic",
+    survival: "Invisible pins are called forgotten action items."
+  },
+  {
+    patterns: ["lean in", "lean into this"],
+    translation: "Engage more actively and take greater ownership or effort.",
+    intent: "Increase participation, commitment, or focus.",
+    action: "Clarify what increased engagement looks like in concrete actions.",
+    risk: "🟡 More Ownership",
+    survival: "No actual change in posture is required."
+  },
+  {
+    patterns: ["pressure test", "pressure-test"],
+    translation: "Challenge the idea to find weaknesses before reality does.",
+    intent: "Validate assumptions, edge cases, and failure modes.",
+    action: "Test the proposal against adverse scenarios, dependencies, and operational constraints.",
+    risk: "🟢 Validation",
+    survival: "Better for the plan to sweat in the meeting than in production."
+  },
+  {
+    patterns: ["rightsize", "rightsizing"],
+    translation: "Adjust resources, scope, or capacity to what is considered appropriate.",
+    intent: "Reduce excess or rebalance effort and cost.",
+    action: "Ask what baseline and criteria define right before changing capacity.",
+    risk: "🟠 Capacity / Cost",
+    survival: "Right is doing a lot of work in this sentence."
+  },
+  {
+    patterns: ["air cover", "provide air cover"],
+    translation: "Provide senior-level support or protection so the team can move through resistance.",
+    intent: "Use sponsorship to remove political or organizational obstacles.",
+    action: "Identify the specific decision, blocker, or stakeholder where sponsorship is needed.",
+    risk: "🟣 Executive Sponsorship",
+    survival: "The problem has probably climbed above the team pay grade."
+  },
+  {
+    patterns: ["runway", "we need runway", "more runway"],
+    translation: "We need more time or capacity before reaching a hard constraint.",
+    intent: "Create space to execute before funding, deadline, or resource pressure becomes critical.",
+    action: "Quantify how much time or capacity is needed and what it enables.",
+    risk: "🟠 Time / Capacity",
+    survival: "Runway is time wearing an aviation costume."
+  },
+  {
+    patterns: ["thread the needle", "threading the needle"],
+    translation: "Find a narrow solution that satisfies competing constraints.",
+    intent: "Balance goals that are difficult to achieve simultaneously.",
+    action: "Make the competing constraints explicit and show the trade-off being optimized.",
+    risk: "🟠 Trade-off",
+    survival: "Often heard when everyone wants yes and the constraints voted no."
+  },
+  {
+    patterns: ["yak shaving", "shaving the yak"],
+    translation: "A simple task has triggered a long chain of prerequisite work.",
+    intent: "Highlight dependency sprawl that is pulling attention away from the original goal.",
+    action: "Write the dependency chain and challenge which steps are actually required now.",
+    risk: "🟠 Dependency Sprawl",
+    survival: "You started by changing a button and somehow ended up configuring DNS."
+  },
+  {
+    patterns: ["rabbit hole", "down the rabbit hole"],
+    translation: "The investigation is becoming deeper and more time-consuming than the current objective warrants.",
+    intent: "Stop exploration from consuming disproportionate time.",
+    action: "Time-box the analysis and define the decision it must support.",
+    risk: "🟡 Investigation Sprawl",
+    survival: "Every rabbit hole comes with at least three tabs and no clear return route."
+  },
+  {
+    patterns: ["watermelon status", "watermelon project", "watermelon"],
+    translation: "The project looks green on the outside but is actually red or troubled underneath.",
+    intent: "Criticize status reporting that hides material issues.",
+    action: "Use objective health criteria and surface risks before they become deadline surprises.",
+    risk: "🔴 Hidden Delivery Risk",
+    survival: "Green shell, red center, very expensive fruit salad."
+  },
+  {
+    patterns: ["pre wire", "pre-wire", "prewire"],
+    translation: "Speak with key stakeholders before the formal meeting so concerns and support are understood in advance.",
+    intent: "Reduce surprises and improve the chance of a productive decision meeting.",
+    action: "Meet critical stakeholders individually, test the proposal, and incorporate material concerns before the formal forum.",
+    risk: "🟣 Stakeholder Preparation",
+    survival: "Some meetings are decided before the calendar invite starts."
+  },
+  {
+    patterns: ["no daylight between us", "no daylight"],
+    translation: "We should present a consistent position with no visible disagreement.",
+    intent: "Ensure tight alignment before communicating upward or externally.",
+    action: "Resolve substantive differences privately before presenting the shared position.",
+    risk: "🟣 Executive Alignment",
+    survival: "No daylight does not mean no debate; it means debate before the audience arrives."
+  },
+  {
+    patterns: ["blast radius", "what's the blast radius", "whats the blast radius"],
+    translation: "How widely could this change or failure affect systems, users, or processes?",
+    intent: "Understand potential impact before acting.",
+    action: "Map affected services, users, data, dependencies, and rollback boundaries.",
+    risk: "🔴 Impact Assessment",
+    survival: "Know the radius before discovering it in production."
+  },
+  {
+    patterns: ["steady state", "steady-state"],
+    translation: "The solution has moved beyond implementation into stable, repeatable operations.",
+    intent: "Define the point where project mode ends and normal operations begin.",
+    action: "Confirm support ownership, monitoring, controls, SLAs, and documentation.",
+    risk: "🟢 Operational Maturity",
+    survival: "Steady state is where project teams discover whether the runbook was aspirational."
+  },
+  {
+    patterns: ["greenfield", "green field"],
+    translation: "Build something new without being constrained by an existing implementation.",
+    intent: "Explore a cleaner design with fewer legacy dependencies.",
+    action: "Plan integration, migration, security, and operations even with the extra freedom.",
+    risk: "🟢 New Build",
+    survival: "Greenfield becomes brownfield surprisingly quickly after launch."
+  },
+  {
+    patterns: ["brownfield", "brown field"],
+    translation: "Change or modernize within an existing environment that already has dependencies and constraints.",
+    intent: "Acknowledge that the work cannot ignore legacy reality.",
+    action: "Map current dependencies, migration constraints, and coexistence before designing the target state.",
+    risk: "🟠 Legacy Constraints",
+    survival: "Brownfield is where architecture diagrams meet history."
+  },
+  {
+    patterns: ["lift and shift", "lift-and-shift"],
+    translation: "Move the existing solution to a new environment with minimal redesign.",
+    intent: "Migrate quickly while deferring deeper modernization.",
+    action: "Be explicit about which legacy costs and risks are moving with it.",
+    risk: "🟠 Migration Trade-off",
+    survival: "Moving the furniture does not remodel the house."
+  },
+  {
+    patterns: ["go no go", "go/no-go"],
+    translation: "Make a formal decision whether conditions are sufficient to proceed.",
+    intent: "Prevent launch from happening by momentum alone.",
+    action: "Use pre-agreed criteria covering testing, risk, dependencies, support, rollback, and approvals.",
+    risk: "🔵 Formal Decision",
+    survival: "We already scheduled it is not a go criterion."
+  },
+  {
+    patterns: ["hypercare", "hyper care"],
+    translation: "Provide elevated monitoring and support immediately after a major release or migration.",
+    intent: "Detect and resolve early production issues quickly.",
+    action: "Define duration, staffing, metrics, escalation, exit criteria, and handoff to BAU.",
+    risk: "🟠 Post-Launch Support",
+    survival: "Hypercare without exit criteria becomes regular care with a dramatic name."
+  },
+  {
+    patterns: ["analysis paralysis", "paralysis by analysis"],
+    translation: "The team is spending so much time analyzing that a decision is not being made.",
+    intent: "Push for a decision with the information already available.",
+    action: "Define the minimum evidence needed, decision owner, and deadline.",
+    risk: "🔴 Decision Delay",
+    survival: "At some point another spreadsheet becomes a symptom."
+  },
+  {
+    patterns: ["moving target", "this is a moving target"],
+    translation: "The requirements, facts, or expected outcome are still changing.",
+    intent: "Warn that commitments may become invalid as conditions evolve.",
+    action: "Baseline what is known now and define how changes will be controlled.",
+    risk: "🔴 Requirements Volatility",
+    survival: "Estimating a moving target is an excellent way to become unexpectedly athletic."
+  },
+  {
+    patterns: ["moving the goalposts", "goalposts are moving"],
+    translation: "The success criteria or expectations are changing after work has already begun.",
+    intent: "Flag destabilizing changes in what counts as done.",
+    action: "Document the original criteria, the new criteria, and the impact of the change.",
+    risk: "🔴 Scope / Expectation Shift",
+    survival: "A project cannot score reliably if the field keeps being renovated."
+  },
+  {
+    patterns: ["elephant in the room"],
+    translation: "There is an obvious important issue that people are avoiding discussing directly.",
+    intent: "Force an uncomfortable but necessary topic into the open.",
+    action: "Name the issue neutrally and connect it to the decision that must be made.",
+    risk: "🔴 Unspoken Issue",
+    survival: "Elephants consume a surprising amount of meeting-room bandwidth."
   }
 ];
 
