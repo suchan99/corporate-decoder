@@ -17,8 +17,7 @@
       <div class="badge">Enterprise Survival Utility 😄</div>
       <h1>Corporate Decoder</h1>
       <p class="subtitle">
-        Turn meeting-speak into plain English, expose the likely action,
-        and detect scope creep before it detects you.
+        Understand what was said, what might be underneath it, and what to say next.
       </p>
     </section>
 
@@ -49,24 +48,49 @@
           <button id="copyBtn" class="ghost-btn" title="Copy result">Copy</button>
         </div>
 
-        <div class="result-grid">
-          <article>
-            <h2>Translation</h2>
+        <div class="decode-core">
+          <article class="result-card">
+            <h2>Plain-English translation</h2>
             <p id="translation"></p>
           </article>
-          <article>
+          <article class="result-card">
             <h2>Likely intent</h2>
             <p id="intent"></p>
           </article>
-          <article>
-            <h2>Recommended action</h2>
-            <p id="action"></p>
-          </article>
-          <article>
-            <h2>Meeting survival note</h2>
-            <p id="survival"></p>
+          <article class="result-card subtext-card">
+            <h2>Read between the lines 👀</h2>
+            <p id="subtext"></p>
+            <small>Possible subtext based on the wording — not a claim about anyone's hidden thoughts.</small>
           </article>
         </div>
+
+        <details class="result-section" open>
+          <summary>What should I do? <span>Practical next step + reply</span></summary>
+          <div class="result-grid">
+            <article>
+              <h2>Recommended action</h2>
+              <p id="action"></p>
+            </article>
+            <article>
+              <div class="card-heading"><h2>Suggested reply</h2><button id="copyReplyBtn" class="mini-copy" type="button">Copy reply</button></div>
+              <p id="reply"></p>
+            </article>
+          </div>
+        </details>
+
+        <details class="result-section">
+          <summary>Give me the fun version 😄 <span>Humor + survival note</span></summary>
+          <div class="result-grid">
+            <article>
+              <h2>Humorous take</h2>
+              <p id="humor"></p>
+            </article>
+            <article>
+              <h2>Meeting survival note 🛟</h2>
+              <p id="survival"></p>
+            </article>
+          </div>
+        </details>
       </div>
 
       <div id="emptyState" class="empty-state">

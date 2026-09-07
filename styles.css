@@ -280,3 +280,23 @@ footer a { color: inherit; }
   .input-row button { min-height: 48px; }
   .result-grid, .steps { grid-template-columns: 1fr; }
 }
+
+
+/* Corporate Decoder V2 result hierarchy */
+.decode-core { display: grid; gap: 12px; }
+.result-card { border: 1px solid var(--border); border-radius: 16px; padding: 16px; background: #fff; }
+.result-card h2 { font-size: 13px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.result-card p { margin: 0; line-height: 1.55; }
+.subtext-card { background: #fafafa; }
+.subtext-card small { display: block; color: var(--muted); margin-top: 10px; line-height: 1.4; }
+.result-section { margin-top: 12px; border: 1px solid var(--border); border-radius: 16px; background: #fff; overflow: hidden; }
+.result-section summary { cursor: pointer; list-style: none; padding: 15px 16px; font-weight: 850; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.result-section summary::-webkit-details-marker { display: none; }
+.result-section summary::after { content: '＋'; color: var(--muted); font-size: 18px; }
+.result-section[open] summary::after { content: '−'; }
+.result-section summary span { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 650; }
+.result-section .result-grid { padding: 0 12px 12px; }
+.card-heading { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 8px; }
+.card-heading h2 { margin: 0; }
+.mini-copy { background: var(--soft); color: #374151; border: 1px solid var(--border); padding: 6px 9px; border-radius: 9px; font-size: 11px; }
+@media (max-width: 720px) { .result-section summary span { display: none; } }

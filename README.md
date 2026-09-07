@@ -166,3 +166,8 @@ The phrase field now searches the built-in corporate dictionary as you type. Aft
 This version supports an optional AI fallback. The local dictionary remains the first layer; if no dictionary or local rule matches, the browser can call a serverless decoder endpoint. The API key is kept server-side and never committed to GitHub Pages.
 
 See [`AI-SETUP.md`](AI-SETUP.md) for deployment instructions. Unknown phrases are sent to the configured backend, so users should not enter confidential or regulated information into the public demo.
+
+
+## V2 output experience
+
+Corporate Decoder now separates the result into three layers: Decode (signal, plain-English translation, likely intent, and possible subtext), Respond (recommended action and a copyable suggested reply), and Survive (a workplace-safe humorous take and meeting survival note). The local dictionary and autocomplete remain available, while unknown phrases can use the optional AI fallback.

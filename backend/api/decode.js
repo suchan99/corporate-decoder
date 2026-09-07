@@ -55,11 +55,14 @@ export default async function handler(req, res) {
     properties: {
       translation: { type: "string" },
       intent: { type: "string" },
+      subtext: { type: "string" },
       action: { type: "string" },
+      reply: { type: "string" },
+      humor: { type: "string" },
       risk: { type: "string" },
       survival: { type: "string" }
     },
-    required: ["translation", "intent", "action", "risk", "survival"]
+    required: ["translation", "intent", "subtext", "action", "reply", "humor", "risk", "survival"]
   };
 
   const body = {
@@ -69,8 +72,11 @@ export default async function handler(req, res) {
       "Interpret ordinary workplace, meeting, email, chat, governance, project, and technology language.",
       "Do not claim to know a person's hidden thoughts or actual intent. Phrase intent as a likely communication purpose based only on the text.",
       "Keep each field concise and useful.",
-      "The risk field must begin with one emoji and a short label, such as 🟢 Informational, 🟡 Ambiguity, 🔴 Scope Creep, or 🟣 Context Needed.",
-      "The survival note may be lightly humorous but must remain workplace-safe and non-insulting."
+      "subtext means possible read-between-the-lines context. Never state it as fact or claim hidden thoughts; use careful language such as may, could, or possible.",
+      "reply must be a polished workplace-safe response the user could actually send or say.",
+      "humor must be a short, witty, workplace-safe observation that is not insulting or targeted at a person.",
+      "The risk field must begin with one emoji and a short signal label, such as 🟢 Routine, 🟡 Ambiguous, 🟠 Scope Creep, 🔴 Escalation, 🔵 Decision Needed, or 🟣 Politics/Alignment.",
+      "The survival note is the practical thing to capture, confirm, or remember before leaving the conversation."
     ].join(" "),
     input: `Decode this workplace phrase: ${JSON.stringify(text)}`,
     text: {
@@ -81,7 +87,7 @@ export default async function handler(req, res) {
         schema
       }
     },
-    max_output_tokens: 350
+    max_output_tokens: 550
   };
 
   try {

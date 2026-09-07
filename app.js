@@ -1084,10 +1084,14 @@ const result = document.getElementById("result");
 const emptyState = document.getElementById("emptyState");
 const translation = document.getElementById("translation");
 const intent = document.getElementById("intent");
+const subtext = document.getElementById("subtext");
 const action = document.getElementById("action");
+const reply = document.getElementById("reply");
+const humor = document.getElementById("humor");
 const survival = document.getElementById("survival");
 const riskBadge = document.getElementById("riskBadge");
 const copyBtn = document.getElementById("copyBtn");
+const copyReplyBtn = document.getElementById("copyReplyBtn");
 const suggestions = document.getElementById("suggestions");
 
 // Build a searchable list from every dictionary pattern while preserving
@@ -1214,10 +1218,44 @@ function showSuggestions() {
   });
 }
 
-function paintResult(data) {
+function enrichResult(data) {
+  const risk = data.risk || "🟡 Context Needed";
+  const label = risk.toLowerCase();
+  let subtext = data.subtext;
+  let replyText = data.reply;
+  let humorText = data.humor;
+
+  if (!subtext) {
+    if (label.includes("scope") || label.includes("effort")) subtext = "The request may carry more work, dependency, or timeline impact than the wording makes explicit.";
+    else if (label.includes("ownership") || label.includes("decision")) subtext = "Accountability or decision ownership may still need to be made explicit before the work can move safely.";
+    else if (label.includes("alignment") || label.includes("ambigu")) subtext = "There may be unresolved assumptions or different expectations that have not yet been stated directly.";
+    else subtext = `A possible subtext is that the speaker is trying to ${String(data.intent || "move the conversation forward").replace(/^[A-Z]/, c => c.toLowerCase())}`;
+  }
+
+  if (!replyText) {
+    if (label.includes("scope") || label.includes("effort")) replyText = "Happy to look at it. Can we confirm what's changing and whether it affects the agreed scope, timeline, effort, or dependencies?";
+    else if (label.includes("ownership")) replyText = "Makes sense. Can we confirm the owner, expected outcome, and target date so we have clear accountability?";
+    else if (label.includes("alignment") || label.includes("ambigu")) replyText = "Agreed. What specifically do we need to align on, and what decision or input would let us move forward?";
+    else replyText = `Understood. To make sure I act on this correctly: ${data.action || "what would you like the next step to be?"}`;
+  }
+
+  if (!humorText) {
+    if (label.includes("scope")) humorText = "A small change has entered the chat. The project plan has begun updating its résumé.";
+    else if (label.includes("alignment")) humorText = "Nothing says alignment quite like scheduling another meeting to define alignment.";
+    else if (label.includes("ownership")) humorText = "The task has many supporters and is currently accepting applications for an owner.";
+    else humorText = "Corporate translation complete: the sentence was wearing a blazer; we found the T-shirt underneath.";
+  }
+  return { ...data, subtext, reply: replyText, humor: humorText };
+}
+
+function paintResult(rawData) {
+  const data = enrichResult(rawData);
   translation.textContent = data.translation;
   intent.textContent = data.intent;
+  subtext.textContent = data.subtext;
   action.textContent = data.action;
+  reply.textContent = data.reply;
+  humor.textContent = data.humor;
   survival.textContent = data.survival;
   riskBadge.textContent = data.risk;
   result.classList.remove("hidden");
@@ -1258,7 +1296,10 @@ async function render() {
     paintResult({
       translation: "This phrase is not in the local dictionary, and the AI decoder is unavailable.",
       intent: "The wording may still be meaningful, but it needs a broader language interpretation.",
+      subtext: "There may be useful context in the wording, but the local decoder does not have enough information to interpret it responsibly.",
       action: "Try a dictionary phrase, or check the AI backend configuration.",
+      reply: "Could you clarify what you would like me to take away or do next?",
+      humor: "The phrase has successfully escaped the corporate dictionary.",
       risk: "🟣 AI Fallback Unavailable",
       survival: error.message || "Even the decoder occasionally needs a quick sync."
     });
@@ -1322,7 +1363,10 @@ copyBtn.addEventListener("click", async () => {
     `Corporate phrase: "${phraseInput.value.trim()}"`,
     `Translation: ${translation.textContent}`,
     `Likely intent: ${intent.textContent}`,
+    `Read between the lines: ${subtext.textContent}`,
     `Recommended action: ${action.textContent}`,
+    `Suggested reply: ${reply.textContent}`,
+    `Humorous take: ${humor.textContent}`,
     `Risk: ${riskBadge.textContent}`,
     `Meeting survival note: ${survival.textContent}`
   ].join("\n");
@@ -1334,4 +1378,13 @@ copyBtn.addEventListener("click", async () => {
   } catch {
     copyBtn.textContent = "Copy failed";
   }
+});
+
+
+copyReplyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(reply.textContent);
+    copyReplyBtn.textContent = "Copied!";
+    setTimeout(() => copyReplyBtn.textContent = "Copy reply", 1200);
+  } catch { copyReplyBtn.textContent = "Copy failed"; }
 });
